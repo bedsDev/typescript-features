@@ -119,3 +119,53 @@ function getProperty<Type>(obj: Type, key: keyof Type){
     return obj[key];
 }                            
 
+let x  =  {a: 1, b: 2, c: 3};
+getProperty(x,'a');
+getProperty(x,'d'); // error: argument of type 'd' is not assignable to parameter of type 
+
+// 6. Conditional Types
+function func6(param: number | boolean) {
+    return param;
+}
+
+console.log(func6(2));
+console.log(func6('True')); // Error
+
+type HasProperty<T, K extends keyof T> = K extends 'age' ? 'Has Age' : 'Has Name';
+
+interface User6 {
+    name: string;
+    age: number;
+}
+
+let test1: HasProperty<User6, 'age'>; // Has Age
+let test2: HasProperty<User6, 'name'>; // Has Name
+let test3: HasProperty<User6, 'email'>; // Error: Type 'email'
+
+// 6. Intersection types
+interface MentalWellness {
+    mindfulnessPractice: boolean;
+    stressLevel: number;
+}
+
+interface PhysicalWellness {
+    exerciseFrequency: string;
+    sleepDuratin: number;
+}
+
+interface Productivity {
+    tasksCompleted: number;
+    focusLevel: number;
+}
+
+type HealthyBody = MentalWellness & PhyicalWellness & Productivity;
+
+const person : HealthyBody = {
+    mindfulnessPractice: true,
+    stressLevel: 4,
+    exerciseFrequency: 'daily',
+    sleepDuration: 7,
+    tasksCompleted: 15,
+    focuseLevel : 8
+        
+}
