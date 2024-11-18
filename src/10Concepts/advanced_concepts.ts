@@ -66,4 +66,56 @@ console.log(user1);
 console.log(user2);
 
 
-// Generic Classes
+// 4. Generic Classes
+
+interface User1 {
+    id: number;
+    name:string;
+    age: number;
+}
+
+class UserDetails<T extends User1> {
+    id: T['id'];
+    name: T['name'];
+    age: T['age'];
+
+    constructor(user: T) {
+        this.id = user.id;
+        this.name = user.name;
+        this.age = user.age;
+    }
+
+    getUserDetails(): string {
+        return `User: ${this.name}, ID: ${this.id}, Age: ${this.age}`;
+    }
+
+    updateName(newName: string): void {
+        this.name = newName;
+    }
+
+    updateAge(newAge: string): void {
+        this.age = newAge;
+    }
+}
+
+// Using the UserDetails class with a User type
+const user1: User1 = {
+    id: 1, 
+    name: 'Alice',
+    age: 30
+};
+const userDetails = new UserDetails(user1);
+console.log(userDetails.getUserDetails());
+
+// Updating user details
+userDetails.updateName('Bob');
+userDetails.updateAge(35);
+
+console.log(userDetails.getUserDetails());
+console.log(new UserDetails('30); //Error, this will throw an error.
+
+// 5. Constraining Type Parameters to Passed Types
+function getProperty<Type>(obj: Type, key: keyof Type){
+    return obj[key];
+}                            
+
